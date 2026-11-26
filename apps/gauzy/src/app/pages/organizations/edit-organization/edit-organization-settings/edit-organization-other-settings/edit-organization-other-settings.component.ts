@@ -154,7 +154,7 @@ export class EditOrganizationOtherSettingsComponent
 	listOfInactivityLimits = DEFAULT_INACTIVITY_TIME_LIMITS;
 	listOfActivityProofDuration = DEFAULT_ACTIVITY_PROOF_DURATIONS;
 	screenshotFrequencyOptions = DEFAULT_SCREENSHOT_FREQUENCY_OPTIONS;
-	numberFormats = ['USD', 'BGN', 'ILS'];
+	numberFormats = ['USD', 'BGN', 'ILS', 'BRL'];
 	numberFormat: string;
 	weekdays: WeekDaysEnum[] = Object.values(WeekDaysEnum);
 	regionCodes = Object.keys(RegionsEnum);
@@ -577,7 +577,7 @@ export class EditOrganizationOtherSettingsComponent
 	 * Returns a preview of a formatted number (e.g., 12345.67) based on the specified currency format.
 	 * The function selects the appropriate locale based on the provided currency and formats the number.
 	 *
-	 * @param format - A string representing the desired currency format (e.g., 'USD', 'BGN', 'ILS')
+	 * @param format - A string representing the desired currency format (e.g., 'USD', 'BGN', 'ILS', 'BRL')
 	 * @returns A formatted number string in the specified currency
 	 */
 	numberFormatPreview(format: string): string {
@@ -585,7 +585,8 @@ export class EditOrganizationOtherSettingsComponent
 		const currencyLocaleMap = {
 			[CurrenciesEnum.BGN]: 'bg', // Bulgarian
 			[CurrenciesEnum.USD]: 'en', // US English
-			[CurrenciesEnum.ILS]: 'he' // Hebrew (Israel)
+			[CurrenciesEnum.ILS]: 'he', // Hebrew (Israel)
+			[CurrenciesEnum.BRL]: 'pt-BR' // Portuguese (Brazil)
 		};
 
 		// Get the locale code based on the provided currency format
