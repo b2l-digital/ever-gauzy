@@ -3,7 +3,7 @@
 
 import { APP_BASE_HREF } from '@angular/common';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
-import { NgModule, ErrorHandler, VERSION, inject, provideAppInitializer } from '@angular/core';
+import { NgModule, ErrorHandler, LOCALE_ID, VERSION, inject, provideAppInitializer } from '@angular/core';
 import { ExtraOptions, Router, RouterModule } from '@angular/router';
 import { OVERLAY_DEFAULT_CONFIG } from '@angular/cdk/overlay';
 import { BrowserModule } from '@angular/platform-browser';
@@ -57,6 +57,7 @@ import {
 import { I18nModule, I18nService } from '@gauzy/ui-core/i18n';
 import { SharedModule, TimeTrackerModule, provideNgSelectPanelSizing } from '@gauzy/ui-core/shared';
 import { ThemeModule } from '@gauzy/ui-core/theme';
+import { resolveAppLocale } from './app-locale';
 import { AppComponent } from './app.component';
 import { appRoutes } from './app.routes';
 import { AppModuleGuard } from './app.module.guard';
@@ -144,6 +145,9 @@ const FEATURE_MODULES = [
 
 		// Exposes the full environment config to the DI tree via the GAUZY_ENV token.
 		{ provide: GAUZY_ENV, useValue: environment },
+
+		// Number, currency and date pipes follow the user's UI language (e.g. pt -> R$ 12.345,67).
+		{ provide: LOCALE_ID, useFactory: resolveAppLocale },
 
 		// The Ever apps the header's app switcher lists: the catalog the Ever Platform UI module carries in its
 		// plugin options (plugin-ui.config.ts, loaded before bootstrap). Not imported here, so taking the module

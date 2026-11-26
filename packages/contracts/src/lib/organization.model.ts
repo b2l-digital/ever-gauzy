@@ -284,7 +284,8 @@ export enum RegionsEnum {
 	'EN' = 'English (United States)',
 	'BG' = 'Bulgarian (Bulgaria)',
 	'HE' = 'Hebrew (Israel)',
-	'RU' = 'Russian (Russia)'
+	'RU' = 'Russian (Russia)',
+	'PT_BR' = 'Portuguese (Brazil)'
 }
 
 export enum DefaultValueDateTypeEnum {
