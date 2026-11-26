@@ -28,7 +28,7 @@ permissions:
 
 env:
   # Versão publicada a cada push no b2l. Suba este número a cada release B2L.
-  B2L_VERSION: v111.269.3-b2l.1
+  B2L_VERSION: v111.269.3-b2l.2
   # Não publica o registro do build (contém build-args em texto puro).
   DOCKER_BUILD_RECORD_UPLOAD: false
   DOCKER_BUILD_SUMMARY: false
