@@ -4,19 +4,22 @@
 name: B2L Build Images
 
 on:
+  # Push no branch b2l compila a versão definida em B2L_VERSION abaixo.
+  push:
+    branches: [b2l]
   workflow_dispatch:
     inputs:
       ref:
         description: 'Commit (SHA completo) ou branch do fork a compilar'
-        required: true
+        required: false
         default: 'b2l'
       version:
-        description: 'Tag da imagem no GHCR (ex.: v111.269.3-b2l.1)'
-        required: true
-        default: 'v111.269.3-b2l.1'
+        description: 'Tag da imagem no GHCR (vazio = B2L_VERSION)'
+        required: false
+        default: ''
 
 concurrency:
-  group: b2l-build-${{ inputs.version }}
+  group: b2l-build-${{ github.ref }}
   cancel-in-progress: false
 
 permissions:
@@ -24,6 +27,8 @@ permissions:
   packages: write
 
 env:
+  # Versão publicada a cada push no b2l. Suba este número a cada release B2L.
+  B2L_VERSION: v111.269.3-b2l.1
   # Não publica o registro do build (contém build-args em texto puro).
   DOCKER_BUILD_RECORD_UPLOAD: false
   DOCKER_BUILD_SUMMARY: false
@@ -40,16 +45,19 @@ jobs:
       - name: Checkout do ref pedido
         uses: actions/checkout@v5
         with:
-          ref: ${{ inputs.ref }}
+          ref: ${{ inputs.ref || github.sha }}
           fetch-depth: 1
           persist-credentials: false
 
       - name: Nome da imagem
         id: meta
+        env:
+          INPUT_VERSION: ${{ inputs.version }}
         run: |
           OWNER=$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')
           echo "image=ghcr.io/${OWNER}/gauzy-${{ matrix.app }}" >> "$GITHUB_OUTPUT"
           echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          echo "version=${INPUT_VERSION:-$B2L_VERSION}" >> "$GITHUB_OUTPUT"
 
       - name: Liberar disco do runner
         run: |
@@ -72,7 +80,7 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: |
-            ${{ steps.meta.outputs.image }}:${{ inputs.version }}
+            ${{ steps.meta.outputs.image }}:${{ steps.meta.outputs.version }}
             ${{ steps.meta.outputs.image }}:sha-${{ steps.meta.outputs.sha }}
           labels: |
             org.opencontainers.image.source=https://github.com/${{ github.repository }}
@@ -82,5 +90,5 @@ jobs:
             NODE_ENV=production
             DEMO=false
             NX_BRANCH=b2l
-            GAUZY_APP_VERSION=${{ inputs.version }}
+            GAUZY_APP_VERSION=${{ steps.meta.outputs.version }}
             GAUZY_APP_COMMIT=${{ steps.meta.outputs.sha }}
