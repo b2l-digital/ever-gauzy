@@ -64,6 +64,12 @@ export const DOCS_LINK_ENTITIES: IDocsLinkEntityDescriptor[] = [
 		labelKey: 'DOCS.LINKS.ENTITY.INVOICE',
 		icon: 'file-text-outline',
 		route: (id) => `/pages/accounting/invoices/edit/${id}`
+	},
+	{
+		entity: BaseEntityEnum.Expense,
+		labelKey: 'DOCS.LINKS.ENTITY.EXPENSE',
+		icon: 'credit-card-outline',
+		route: (id) => `/pages/accounting/expenses/view/${id}`
 	}
 ];
 

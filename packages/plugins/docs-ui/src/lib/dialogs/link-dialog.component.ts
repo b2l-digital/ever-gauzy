@@ -8,6 +8,7 @@ import {
 	IDocument,
 	IDocumentLink,
 	IEmployee,
+	IExpense,
 	IInvoice,
 	IOrganizationContact,
 	IOrganizationProject,
@@ -16,6 +17,7 @@ import {
 } from '@gauzy/contracts';
 import {
 	EmployeesService,
+	ExpensesService,
 	InvoicesService,
 	OrganizationContactService,
 	OrganizationProjectsService,
@@ -79,6 +81,7 @@ export class DocumentLinkDialogComponent extends TranslationBaseComponent implem
 		private readonly employeesService: EmployeesService,
 		private readonly contactsService: OrganizationContactService,
 		private readonly invoicesService: InvoicesService,
+		private readonly expensesService: ExpensesService,
 		private readonly toastrService: ToastrService,
 		private readonly store: Store
 	) {
@@ -178,6 +181,13 @@ export class DocumentLinkDialogComponent extends TranslationBaseComponent implem
 					label: `#${invoice.invoiceNumber ?? invoice.id}`
 				}));
 			}
+			case BaseEntityEnum.Expense: {
+				const result = await this.expensesService.getAll(['vendor'], where);
+				return (result?.items ?? []).map((expense: IExpense) => ({
+					id: expense.id as ID,
+					label: this.expenseLabel(expense)
+				}));
+			}
 			default:
 				return [];
 		}
@@ -193,6 +203,16 @@ export class DocumentLinkDialogComponent extends TranslationBaseComponent implem
 		if (!task.number) return task.title;
 		const key = task.prefix ? `${task.prefix}-` : '#';
 		return `${key}${task.number} · ${task.title}`;
+	}
+
+	/**
+	 * Picker label for an expense: vendor (or purpose) plus amount and currency,
+	 * e.g. `"AWS · 120.5 USD"`. Expenses have no number or title of their own.
+	 */
+	private expenseLabel(expense: IExpense): string {
+		const name = expense.vendor?.name || expense.purpose || expense.typeOfExpense || String(expense.id);
+		const amount = [expense.amount, expense.currency].filter((part) => part != null && part !== '').join(' ');
+		return amount ? `${name} · ${amount}` : name;
 	}
 
 	// ─── Picker ──────────────────────────────────────────────────
