@@ -9,11 +9,11 @@ on:
       ref:
         description: 'Commit (SHA completo) ou branch do fork a compilar'
         required: true
-        default: 'fab73400e33e1c695a8ba84302a334006e238e69'
+        default: 'b2l'
       version:
-        description: 'Tag da imagem no GHCR (ex.: v111.269.3)'
+        description: 'Tag da imagem no GHCR (ex.: v111.269.3-b2l.1)'
         required: true
-        default: 'v111.269.3'
+        default: 'v111.269.3-b2l.1'
 
 concurrency:
   group: b2l-build-${{ inputs.version }}
