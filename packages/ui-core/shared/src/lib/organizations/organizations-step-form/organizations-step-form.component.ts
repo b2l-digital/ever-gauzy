@@ -56,7 +56,7 @@ export class OrganizationsStepFormComponent implements OnInit, OnDestroy, AfterV
 	weekdays: string[] = Object.values(WeekDaysEnum);
 	regionCodes = Object.keys(RegionsEnum);
 	regionCode: string;
-	numberFormats = ['USD', 'BGN', 'ILS'];
+	numberFormats = ['USD', 'BGN', 'ILS', 'BRL'];
 	listOfDateFormats = DEFAULT_DATE_FORMATS;
 	user: IUser;
 	retrieveEmail: string;
@@ -374,6 +374,9 @@ export class OrganizationsStepFormComponent implements OnInit, OnDestroy, AfterV
 				break;
 			case CurrenciesEnum.ILS:
 				code = 'he';
+				break;
+			case CurrenciesEnum.BRL:
+				code = 'pt-BR';
 				break;
 		}
 		return number.toLocaleString(`${code}`, {
