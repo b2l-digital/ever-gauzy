@@ -358,7 +358,8 @@
 			"TEAM": "Team",
 			"EMPLOYEE": "Employee",
 			"CONTACT": "Contact",
-			"INVOICE": "Invoice"
+			"INVOICE": "Invoice",
+			"EXPENSE": "Expense"
 		}
 	},
 	"EXPORT": {

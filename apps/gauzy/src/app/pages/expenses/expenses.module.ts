@@ -33,6 +33,8 @@ import { ExpenseCategoryMutationComponent } from './expense-categories/expense-c
 import { ExpenseViewPageComponent } from './expense-view/expense-view-page.component';
 import { ExpenseBarChartComponent } from './expense-view/expense-charts/expense-bar-chart.component';
 import { ExpenseShareChartComponent } from './expense-view/expense-charts/expense-share-chart.component';
+// Record-side Documents panel: standalone, so it is imported directly (receipts and invoices as PDF).
+import { DocumentLinksPanelComponent } from '@gauzy/plugin-docs-ui';
 
 // Nebular Modules
 const NB_MODULES = [
@@ -53,7 +55,9 @@ const STANDALONE_MODULES = [
 	InfiniteScrollDirective, // Standalone directive must be imported, not declared
 	// The expense page's charts
 	ExpenseBarChartComponent,
-	ExpenseShareChartComponent
+	ExpenseShareChartComponent,
+	// The expense's Documents panel
+	DocumentLinksPanelComponent
 ];
 
 // Third Party Modules

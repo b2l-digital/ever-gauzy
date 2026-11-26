@@ -116,6 +116,8 @@ const NO_CHARTS: IExpenseCharts = {
 export class ExpenseViewPageComponent extends TranslationBaseComponent implements OnInit {
 	readonly PermissionsEnum = PermissionsEnum;
 	readonly favoriteEntity = BaseEntityEnum.Expense;
+	/** The record type the Documents panel attaches files (e.g. PDF receipts and invoices) to. */
+	readonly documentEntity = BaseEntityEnum.Expense;
 	readonly backLink = EXPENSES_LIST_LINK;
 
 	/** The expense as read: what the edit dialog is opened on. */
